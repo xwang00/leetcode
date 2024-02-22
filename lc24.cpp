@@ -1,8 +1,7 @@
 #include <iostream>
 /**
  * Definition for singly-linked list. */
-struct ListNode
-{
+struct ListNode {
     int val;
     ListNode *next;
     ListNode() : val(0), next(nullptr) {}
@@ -10,23 +9,16 @@ struct ListNode
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-class Solution
-{
-public:
-    ListNode *swapPairs(ListNode *head)
-    {
-        ListNode *cur = new ListNode();
+class Solution {
+   public:
+    ListNode *swapPairs(ListNode *head) {
         ListNode *dummyhead = new ListNode();
-        ListNode *temp1 = new ListNode();
-        ListNode *temp2 = new ListNode();
         dummyhead->next = head;
-        cur = dummyhead;
-        if (head)
-        {
-            while (cur->next && cur->next->next)
-            {
-                temp1 = cur->next;
-                temp2 = cur->next->next->next;
+        ListNode *cur = dummyhead;
+        if (head) {
+            while (cur->next && cur->next->next) {
+                ListNode *temp1 = cur->next;
+                ListNode *temp2 = cur->next->next->next;
                 cur->next = cur->next->next;
                 cur->next->next = temp1;
                 cur->next->next->next = temp2;
@@ -38,7 +30,7 @@ public:
 };
 
 // Function to print the linked list
-void printList(ListNode* head) {
+void printList(ListNode *head) {
     while (head) {
         std::cout << head->val << " ";
         head = head->next;
@@ -46,10 +38,9 @@ void printList(ListNode* head) {
     std::cout << std::endl;
 }
 
-int main()
-{
+int main() {
     // Create the input linked list: 1->2->3->4
-    ListNode* head = new ListNode(1);
+    ListNode *head = new ListNode(1);
     head->next = new ListNode(2);
     head->next->next = new ListNode(3);
     head->next->next->next = new ListNode(4);
@@ -58,10 +49,10 @@ int main()
     Solution solution;
 
     // Call the swapPairs method to swap the pairs of nodes
-    ListNode* swappedHead = solution.swapPairs(head);
+    ListNode *swappedHead = solution.swapPairs(head);
 
     // Print the output linked list after swapping pairs
     std::cout << swappedHead;
-    
+
     return 0;
 }
