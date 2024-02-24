@@ -25,7 +25,9 @@ class Solution {
                 cur = cur->next->next;
             }
         }
-        return dummyhead->next;
+        head = dummyhead->next;
+        delete dummyhead;
+        return head;
     }
 };
 
