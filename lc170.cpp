@@ -7,28 +7,15 @@ class Solution {
                  std::vector<int>& temp) {
         int res = 0, p = a, q = m, i = a;
         while (p < m && q < b) {
-            if (nums[p] >= nums[q]) {
-                for (int j = p; j < m; j++) {
-                    if (nums[j] > 2 * (long long)nums[q]) {
-                        res ++;
-                        std::cout << p << m << q << b << '\t' << nums[j] << '\t'<< nums[q] << '\n';
-                    }
-                }
+            if (nums[p] > nums[q]) {
+                res += m-p;
                 temp[i++] = nums[q++];
             } else
                 temp[i++] = nums[p++];
         }
         while (q < b) temp[i++] = nums[q++];
-        while (p < m) {
-            // for (int j = m; j < b; j++) {
-            //     if (p < m - 1 && nums[p] > 2 * nums[j]) {
-            //         res++;
-            //         std::cout << p << '\t' << nums[p] << '\t' << nums[j] << 'n';
-            //     }
-            // }
-            temp[i++] = nums[p++];
-        }
-
+        while (p < m) temp[i++] = nums[p++];
+        
         // for (int i = a; i < b; i++) {
         //     if (p < m && q < b && nums[p] > nums[q]) {
         //         temp[i] = nums[q];
