@@ -3,30 +3,56 @@
 
 class Solution {
    public:
+    int binary_search(long long q, int a, int b, std::vector<int>& nums) {
+        int m = a + (b - a) / 2;
+        if (b - a > 1) {
+            if (nums[m - 1] <= q && nums[m] > q)
+                return m;
+            else if (nums[m] > q)
+                return binary_search(q, a, m, nums);
+            else if (nums[m] <= q)
+                return binary_search(q, m + 1, b, nums);
+        }
+        if (a == b || nums[a] <= q)
+            return b;
+        else
+            return a;
+    }
     int comp_num(int a, int m, int b, std::vector<int>& nums,
                  std::vector<int>& temp) {
         int res = 0, p = a, q = m, i = a;
         while (p < m && q < b) {
             if (nums[p] >= nums[q]) {
-                for (int j = a; j < m; j++) {
-                    if (nums[j] > 2 * (long long)nums[q]) {
-                        res++;
-                        // std::cout << p << m << q << b << '\t' << nums[j] <<
-                        // '\t'<< nums[q] << '\n';
-                    }
-                }
+                int j = binary_search((long long)nums[q] * 2, a, m, nums);
+                std::cout << q << '\t' << j << '\n';
+                res += m - j;
+                // for (int j = a; j < m; j++) {
+                //     if (nums[j] > 2 * (long long)nums[q]) {
+                //         res += m-j;
+                //         break;
+                //          //std::cout << a << '\t'<< p << '\t'<< q <<
+                //          '\t'<< b
+                //          << '\t'<< j << '\n';
+                //         //<< '\t'<< nums[q] << '\n';
+                //     }
+                // }
                 temp[i++] = nums[q++];
             } else
                 temp[i++] = nums[p++];
         }
         while (q < b) {
-            for (int j = a; j < m; j++) {
-                if (nums[j] > 2 * (long long)nums[q]) {
-                    res++;
-                    // std::cout << p << m << q << b << '\t' << nums[j] <<
-                    // '\t'<< nums[q] << '\n';
-                }
-            }
+            int j = binary_search((long long)2 * nums[q], a, m, nums);
+            std::cout << q << '\t' << j << '\n';
+            res += m - j;
+            // for (int j = a; j < m; j++) {
+            //     if (nums[j] > 2 * (long long)nums[q]) {
+            //         res += m-j;
+            //         break;
+            //              //std::cout << a << '\t'<< p << '\t'<< q << '\t'<< b
+            //              << '\t'<< j << '\n';
+            //         // <<'\t'<< nums[q] << '\n';
+            //     }
+            // }
             temp[i++] = nums[q++];
         }
         while (p < m) {
@@ -34,6 +60,7 @@ class Solution {
         }
 
         for (int i = a; i < b; i++) nums[i] = temp[i];
+        std::cout << '\n';
         return res;
     }
 
@@ -78,7 +105,7 @@ class Solution {
 // };
 
 int main() {
-    std::vector<int> nums = {5, 4, 3, 2, 1};
+    std::vector<int> nums = {500, 201, 100, 47, 23, 11, 5, 4, 3, 2, 1};
     Solution solution;
     long long n = solution.reversePairs(nums);
     std::cout << n;
