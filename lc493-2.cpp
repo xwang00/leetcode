@@ -1,62 +1,38 @@
 #include <iostream>
 #include <vector>
 
-// n log^2(n)
+// nlogn
 
 class Solution {
    public:
-    int binary_search(long long q, int a, int b, std::vector<int>& nums) {
-        int m = a + (b - a) / 2;
-        if (b - a > 1) {
-            if (nums[m - 1] <= q && nums[m] > q)
-                return m;
-            else if (nums[m] > q)
-                return binary_search(q, a, m, nums);
-            else if (nums[m] <= q)
-                return binary_search(q, m + 1, b, nums);
-        }
-        if (a == b || nums[a] <= q)
-            return b;
-        else
-            return a;
-    }
     int comp_num(int a, int m, int b, std::vector<int>& nums,
                  std::vector<int>& temp) {
+        // two times
         int res = 0, p = a, q = m, i = a;
         while (p < m && q < b) {
-            if (nums[p] >= nums[q]) {
-                int j = a;
-                j = binary_search((long long)nums[q] * 2, j, m, nums);
-                std::cout << q << '\t' << j << '\n';
-                res += m - j;
-                // for (int j = a; j < m; j++) {
-                //     if (nums[j] > 2 * (long long)nums[q]) {
-                //         res += m-j;
-                //         break;
-                //          //std::cout << a << '\t'<< p << '\t'<< q <<
-                //          '\t'<< b
-                //          << '\t'<< j << '\n';
-                //         //<< '\t'<< nums[q] << '\n';
-                //     }
-                // }
+            if (nums[p] > 2 * (long long) nums[q]) {
+            // std::cout << q << '\t' << p << '\t' << nums[p] << '\t' << nums[q] << '\n';
+                res += m - p;
                 temp[i++] = nums[q++];
             } else
                 temp[i++] = nums[p++];
         }
         while (q < b) {
-            int j = a;
-            j = binary_search((long long)nums[q] * 2, j, m, nums);
-            std::cout << q << '\t' << j << '\n';
-            res += m - j;
-            // for (int j = a; j < m; j++) {
-            //     if (nums[j] > 2 * (long long)nums[q]) {
-            //         res += m-j;
-            //         break;
-            //              //std::cout << a << '\t'<< p << '\t'<< q << '\t'<< b
-            //              << '\t'<< j << '\n';
-            //         // <<'\t'<< nums[q] << '\n';
-            //     }
-            // }
+            temp[i++] = nums[q++];
+        }
+        while (p < m) {
+            temp[i++] = nums[p++];
+        }
+
+        // one time
+        p = a; q = m; i = a;
+        while (p < m && q < b) {
+            if (nums[p] > nums[q]) {
+                temp[i++] = nums[q++];
+            } else
+                temp[i++] = nums[p++];
+        }
+        while (q < b) {
             temp[i++] = nums[q++];
         }
         while (p < m) {
@@ -64,7 +40,7 @@ class Solution {
         }
 
         for (int i = a; i < b; i++) nums[i] = temp[i];
-        std::cout << '\n';
+        // std::cout << '\n';
         return res;
     }
 
