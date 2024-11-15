@@ -13,11 +13,11 @@ class Solution:
         j = 0
         count = 1
         while i<n and j < n and count <= n*n:
-            while j < n:
+            while j < n-1:
                 result[i][j] = count
                 j += 1
                 count +=1
-            while i < n:
+            while i < n-1:
                 result[i][j] = count
                 i += 1
                 count +=1
