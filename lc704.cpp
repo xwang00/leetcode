@@ -4,10 +4,14 @@
 class Solution {
 public:
     int search(std::vector<int>& nums, int target) {
-        int result = -1;
-        for(int i = 0; i<nums.size(); i++)
+        int result = -1, m = 0, n = nums.size(),i;
+        while(m<n)
         {
-            if (nums[i] == target) result = i;
+            i = (m+n)/2;
+            if (nums[i] == target) {result = i; break;}
+            else if (m +1 ==n) break;
+            else if (nums[i]<target) m = i;
+            else if (nums[i]>target) n = i;
         }
         return result;
     }
@@ -15,8 +19,8 @@ public:
 
 int main()
 {
-    std::vector<int> nums = {-1,0,3,5,9,12};
-    int target = 2;
+    std::vector<int> nums = {9};
+    int target = 9;
     Solution solution;
     int n = solution.search(nums, target);
     std::cout << n;
